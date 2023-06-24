@@ -19,14 +19,13 @@ jobs:
           registry-url: 'https://registry.npmjs.org'
           scope: '@spydersoft'
       - name: Get Version from Release Tag
-        run:  TAG=$(git describe --tags); if github.event.release.prerelease; then RELEASE="-prerelease"; else  RELEASE="";  fi; echo "VERSION=${TAG}${RELEASE}" >> $GITHUB_ENV
+        run:  TAG=$(git describe --tags); echo "VERSION=${TAG}${RELEASE}" >> $GITHUB_ENV
       - run: |
           yarn install
           yarn ci
         name: Run Build (with tests)
       - run: |
-          yarn config set version-commit-hooks false
-          yarn version --new-version ${{ env.VERSION }}
+          yarn version --no-git-tag-version --new-version ${{ env.VERSION }}
         name: Set package version based on GitVersion
       - run: yarn npm publish
         env:
