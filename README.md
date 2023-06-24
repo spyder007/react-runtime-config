@@ -44,12 +44,12 @@ This configuration is then easily read by the simple React hook that this librar
 
 ## Getting started
 
-1. `npm i react-runtime-config`
+1. `npm i @spydersoft/react-runtime-config`
 1. Create a namespace for your config:
 
 ```tsx
 // components/Config.tsx
-import createConfig from "react-runtime-config";
+import createConfig from "@spydersoft/react-runtime-config";
 
 /**
  * `useConfig` and `useAdminConfig` are now React hooks that you can use in your app.
@@ -197,7 +197,7 @@ Spoiler alert, having this kind of component type safe can be tricky, indeed you
 Anyway, long story short, this library provide you an easy way to with this: `GenericAdminFields` type. This type is compatible with every configuration and will provide you a nice framework to create an amazing UX.
 
 ```tsx
-import { GenericAdminFields } from "react-runtime-config";
+import { GenericAdminFields } from "@spydersoft/react-runtime-config";
 
 export interface ConfigSectionProps {
   fields: GenericAdminFields;
