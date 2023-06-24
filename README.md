@@ -1,7 +1,7 @@
 # React Runtime Config (FORK)
 
 > This is a fork of [contiamo's react-runtime-config](https://github.com/contiamo/react-runtime-config) library.  At the time of the fork creation, the
-> library had not been formally released since April 15, 2015.  This library is scoped as `@spydersoft/react-runtime-config` at [npm](https://www.npmjs.com).
+> library had not been formally released since April 15, 2021.  This library is scoped as `@spydersoft/react-runtime-config` at [npm](https://www.npmjs.com).
 
 A simple way to provide runtime configuration for your React application, with localStorage overrides and hot-reload support ⚡️!
 
