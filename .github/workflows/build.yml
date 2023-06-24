@@ -24,5 +24,6 @@ jobs:
       - run: |
           yarn install
           yarn ci
+        name: Run CI Test Build
 
       

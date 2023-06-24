@@ -23,6 +23,7 @@ jobs:
       - run: |
           yarn install
           yarn ci
+        name: Run Build (with tests)
       - run: |
           yarn config set version-commit-hooks false
           yarn version --new-version ${{ env.VERSION }}
