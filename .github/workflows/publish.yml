@@ -1,0 +1,30 @@
+
+name: Package Publish
+
+on:
+  release:
+    types: [ published ]
+
+jobs:
+  publish:
+    if: ${{ github.event.action == 'published' && !github.event.release.draft}}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '18.x'
+          registry-url: 'https://registry.npmjs.org'
+          scope: '@spydersoft'
+      - name: Get Version from Release Tag
+        run:  TAG=$(git describe --tags); if github.event.release.prerelease; then RELEASE="-prerelease"; else  RELEASE="";  fi; echo "VERSION=${TAG}${RELEASE}" >> $GITHUB_ENV
+      - run: yarn ci
+      - run: |
+          yarn config set version-commit-hooks false
+          yarn version --new-version ${{ env.VERSION }}
+        name: Set package version based on GitVersion
+      - run: yarn npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
