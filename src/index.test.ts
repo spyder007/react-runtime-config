@@ -50,7 +50,7 @@ describe("localStorage mock", () => {
   });
 });
 
-describe("react-runtime-config", () => {
+describe("@spydersoft/react-runtime-config", () => {
   const namespace = "test";
   const createConfigWithDefaults = (
     config: Pick<Partial<ConfigOptions<never, "">>, "localOverride" | "namespace"> = {},
@@ -118,7 +118,7 @@ describe("react-runtime-config", () => {
   it("should throw if a window value don't fit the schema", () => {
     set(window, `${namespace}.color`, "red");
     expect(() => createConfigWithDefaults()).toThrowErrorMatchingInlineSnapshot(
-      `"Config key \\"color\\" not valid: red not part of [\\"blue\\", \\"green\\", \\"pink\\"]"`,
+      `"Config key "color" not valid: red not part of ["blue", "green", "pink"]"`,
     );
   });
 
@@ -218,12 +218,12 @@ describe("react-runtime-config", () => {
       setConfig("color", "green");
 
       expect(getAllConfig()).toMatchInlineSnapshot(`
-        Object {
+        {
           "backend": "http://localhost",
           "color": "green",
           "isAwesome": true,
           "isLive": false,
-          "monitoringLink": Object {
+          "monitoringLink": {
             "displayName": "Monitoring",
             "url": "http://localhost:5000",
           },
@@ -294,28 +294,28 @@ describe("react-runtime-config", () => {
     it("should throw if the type is not respected", () => {
       const { setConfig } = createConfigWithDefaults();
       expect(() => setConfig("port", "yolo" as any)).toThrowErrorMatchingInlineSnapshot(
-        `"Expected \\"port=yolo\\" to be a \\"number\\""`,
+        `"Expected "port=yolo" to be a "number""`,
       );
     });
 
     it("should throw if the min value is not respected", () => {
       const { setConfig } = createConfigWithDefaults();
       expect(() => setConfig("port", -1)).toThrowErrorMatchingInlineSnapshot(
-        `"Expected \\"port=-1\\" to be greater than 1"`,
+        `"Expected "port=-1" to be greater than 1"`,
       );
     });
 
     it("should throw if the max value is not respected", () => {
       const { setConfig } = createConfigWithDefaults();
       expect(() => setConfig("port", 100000)).toThrowErrorMatchingInlineSnapshot(
-        `"Expected \\"port=100000\\" to be lower than 65535"`,
+        `"Expected "port=100000" to be lower than 65535"`,
       );
     });
 
     it("should throw if the enum value is not respected", () => {
       const { setConfig } = createConfigWithDefaults();
       expect(() => setConfig("color", "red" as any)).toThrowErrorMatchingInlineSnapshot(
-        `"Expected \\"color=red\\" to be one of: blue, green, pink"`,
+        `"Expected "color=red" to be one of: blue, green, pink"`,
       );
     });
 
@@ -349,12 +349,12 @@ describe("react-runtime-config", () => {
       act(() => result.current.setConfig("color", "green"));
       const all = result.current.getAllConfig();
       expect(all).toMatchInlineSnapshot(`
-        Object {
+        {
           "backend": "http://localhost",
           "color": "green",
           "isAwesome": true,
           "isLive": false,
-          "monitoringLink": Object {
+          "monitoringLink": {
             "displayName": "Monitoring",
             "url": "http://localhost:5000",
           },
@@ -381,7 +381,7 @@ describe("react-runtime-config", () => {
       expect(getBoomConfig("oh")).toBe("yeah");
       act(() => setBoomConfig("oh", "popopo"));
       expect(getAllBoomConfig()).toMatchInlineSnapshot(`
-        Object {
+        {
           "oh": "popopo",
         }
       `);
@@ -402,9 +402,9 @@ describe("react-runtime-config", () => {
       const color = result.current.fields.find(({ key }) => key === "color");
 
       expect(color).toMatchInlineSnapshot(`
-        Object {
+        {
           "description": "Main color of the application",
-          "enum": Array [
+          "enum": [
             "blue",
             "green",
             "pink",

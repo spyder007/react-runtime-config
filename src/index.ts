@@ -61,7 +61,7 @@ export function createConfig<TSchema extends Record<string, Config>, TNamespace 
   const getStorageValue = (path: keyof TSchema) => {
     if (injected.storage && injected.localOverride) {
       try {
-        let rawValue = injected.storage.getItem(`${injected.namespace}.${path}`);
+        let rawValue = injected.storage.getItem(`${injected.namespace}.${String(path)}`);
         try {
           rawValue = JSON.parse(rawValue || ""); // Handle objects stored as string
         } catch {}
@@ -81,10 +81,10 @@ export function createConfig<TSchema extends Record<string, Config>, TNamespace 
    */
   const getWindowValue = (path: keyof TSchema) => {
     try {
-      const rawValue = get(window, `${injected.namespace}.${path}`, null);
+      const rawValue = get(window, `${injected.namespace}.${String(path)}`, null);
       return rawValue === null ? null : parse(rawValue, options.schema[path]);
-    } catch (e) {
-      throw new Error(`Config key "${path}" not valid: ${e.message}`);
+    } catch (e : any) {
+      throw new Error(`Config key "${String(path)}" not valid: ${e.message}`);
     }
   };
 
@@ -102,7 +102,7 @@ export function createConfig<TSchema extends Record<string, Config>, TNamespace 
     const windowValue = getWindowValue(path);
 
     if (defaultValue === undefined && windowValue === null) {
-      throw new Error(`Config key "${path}" need to be defined in "window.${injected.namespace}.${path}!`);
+      throw new Error(`Config key "${String(path)}" need to be defined in "window.${injected.namespace}.${String(path)}!`);
     }
 
     return storageValue !== null ? storageValue : windowValue !== null ? windowValue : defaultValue;
@@ -123,23 +123,23 @@ export function createConfig<TSchema extends Record<string, Config>, TNamespace 
         throw e;
       }
       if (isStringEnumConfig(config)) {
-        throw new Error(`Expected "${path}=${value}" to be one of: ${config.enum.join(", ")}`);
+        throw new Error(`Expected "${String(path)}=${value}" to be one of: ${config.enum.join(", ")}`);
       } else if (isNumberConfig(config) && Number.isFinite(value)) {
-        if (typeof config.min === "number" && value < config.min) {
-          throw new Error(`Expected "${path}=${value}" to be greater than ${config.min}`);
+        if (typeof config.min === "number" && Number(value) < config.min) {
+          throw new Error(`Expected "${String(path)}=${value}" to be greater than ${config.min}`);
         }
-        if (typeof config.max === "number" && value > config.max) {
-          throw new Error(`Expected "${path}=${value}" to be lower than ${config.max}`);
+        if (typeof config.max === "number" && Number(value) > config.max) {
+          throw new Error(`Expected "${String(path)}=${value}" to be lower than ${config.max}`);
         }
       }
 
-      throw new Error(`Expected "${path}=${value}" to be a "${config.type}"`);
+      throw new Error(`Expected "${String(path)}=${value}" to be a "${config.type}"`);
     }
     if (getWindowValue(path) === value || config.default === value) {
-      injected.storage.removeItem(`${injected.namespace}.${path}`);
+      injected.storage.removeItem(`${injected.namespace}.${String(path)}`);
     } else {
       const encodedValue = typeof value === "string" ? value : JSON.stringify(value);
-      injected.storage.setItem(`${injected.namespace}.${path}`, encodedValue);
+      injected.storage.setItem(`${injected.namespace}.${String(path)}`, encodedValue);
     }
     window.dispatchEvent(new Event("storage"));
   }

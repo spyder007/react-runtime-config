@@ -50,14 +50,14 @@ export function parse<TConfig extends Config>(value: unknown, config: TConfig): 
     return parseString(value) as ResolvedConfigValue<TConfig>;
   }
   if (isNumberConfig(config)) {
-    const parsedNumber = parseNumber(value) as ResolvedConfigValue<TConfig>;
+    const parsedNumber = parseNumber(value);
     if (typeof config.min === "number" && parsedNumber < config.min) {
       throw new Error(`${parseNumber} should be greater than ${config.min}`);
     }
     if (typeof config.max === "number" && parsedNumber > config.max) {
       throw new Error(`${parseNumber} should be lower than ${config.max}`);
     }
-    return parsedNumber;
+    return parsedNumber as ResolvedConfigValue<TConfig>;
   }
   if (isBooleanConfig(config)) {
     return parseBoolean(value) as ResolvedConfigValue<TConfig>;

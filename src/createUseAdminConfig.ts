@@ -13,7 +13,7 @@ export function createUseAdminConfig<TSchema extends Record<string, Config>, TNa
     const fields = useMemo(() => {
       return configKeys.map(key => ({
         key,
-        path: `${props.namespace}.${key}`,
+        path: `${props.namespace}.${String(key)}`,
         ...props.schema[key],
         windowValue: props.getWindowValue(key),
         storageValue: props.getStorageValue(key),
@@ -25,7 +25,7 @@ export function createUseAdminConfig<TSchema extends Record<string, Config>, TNa
 
     const reset = useCallback(() => {
       configKeys.forEach(path => {
-        props.storage.removeItem(`${props.namespace}.${path}`);
+        props.storage.removeItem(`${props.namespace}.${String(path)}`);
       });
       window.dispatchEvent(new Event("storage"));
     }, [configKeys, props.namespace]);

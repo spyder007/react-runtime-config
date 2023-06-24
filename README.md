@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="https://github.com/contiamo/react-runtime-config/raw/master/assets/react-runtime-config-logo.png" alt="react-runtime-config" height="140" />
+  <img src="https://github.com/spyder007/react-runtime-config/raw/master/assets/react-runtime-config-logo.png" alt="react-runtime-config" height="140" />
 </div>
 
 <h4 align="center">
