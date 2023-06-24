@@ -1,24 +1,13 @@
-<div align="center">
-  <img src="https://github.com/spyder007/react-runtime-config/raw/master/assets/react-runtime-config-logo.png" alt="react-runtime-config" height="140" />
-</div>
+# React Runtime Config (FORK)
 
-<h4 align="center">
-  Make your application easily configurable.
-</h4>
+> This is a fork of [contiamo's react-runtime-config](https://github.com/contiamo/react-runtime-config) library.  At the time of the fork creation, the
+> library had not been formally released since April 15, 2015.  This library is scoped as `@spydersoft/react-runtime-config` at [npm](https://www.npmjs.com).
 
-<p align="center">
-  A simple way to provide runtime configuration for your React application, with localStorage overrides and hot-reload support ⚡️!
-</p>
+A simple way to provide runtime configuration for your React application, with localStorage overrides and hot-reload support ⚡️!
 
-<p align="center">
-  <a href="https://www.npmjs.com/package/react-runtime-config">
-    <img src="https://img.shields.io/npm/v/react-runtime-config/latest.svg" alt="npm (tag)" />
-  </a>
-  <a href="https://travis-ci.org/contiamo/react-runtime-config">
-    <img src="https://travis-ci.org/contiamo/react-runtime-config.svg?branch=master" alt="travis (tag)" />
-  </a>
-  <img src="https://img.shields.io/github/license/mashape/apistatus.svg" alt="license MIT (tag)" />
-</p>
+[![npm](https://img.shields.io/npm/dt/@spydersoft/react-runtime-config)](https://www.npmjs.com/package/@spydersoft/react-runtime-config)
+[![build](https://img.shields.io/github/actions/workflow/status/spyder007/react-runtime-config/build.yml)](https://www.npmjs.com/package/@spydersoft/react-runtime-config)
+![mit](https://img.shields.io/github/license/mashape/apistatus.svg)
 
 ## Why
 
