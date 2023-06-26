@@ -24,9 +24,12 @@ jobs:
           yarn install
           yarn ci
         name: Run Build (with tests)
-      - run: |
-          yarn version --no-git-tag-version --new-version ${{ env.VERSION }}
-        name: Set package version based on GitVersion
+      - name: Change Version in package.json
+        shell: pwsh
+        run: |
+          $packageJson = Get-Content -Raw -Path package.json | ConvertFrom-Json
+          $packageJson.version = ${{ env.VERSION }}
+          $packageJson | ConvertTo-Json -Depth 100 | Set-Content -Path package.json
       - run: yarn publish
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
