@@ -114,7 +114,7 @@ export const isCustomConfig = (config: Config): config is CustomConfig => config
 export interface InjectedProps<
   TSchema extends Record<string, Config>,
   TNamespace extends string,
-  TConfig = ResolvedSchema<TSchema>
+  TConfig = ResolvedSchema<TSchema>,
 > {
   namespace: string;
   configNamespace: TNamespace;
@@ -165,11 +165,9 @@ type TupleFromInterface<T, K extends Array<keyof T> = Array<keyof T>> = {
   [I in keyof K]: Lookup<T, K[I]>;
 };
 
-export type AdminFields<TSchema extends Record<string, Config>> = TupleFromInterface<
-  {
-    [key in keyof TSchema]: AdminField<TSchema, key>;
-  }
->;
+export type AdminFields<TSchema extends Record<string, Config>> = TupleFromInterface<{
+  [key in keyof TSchema]: AdminField<TSchema, key>;
+}>;
 
 // useAdminConfig generic types
 type AdminProps<T, U = T> = {
@@ -226,5 +224,5 @@ type Namespaced<T, TNamespace extends string> = {
 
 export type NamespacedUseConfigReturnType<
   TSchema extends Record<string, Config>,
-  TNamespace extends string
+  TNamespace extends string,
 > = Namespaced<UseConfigReturnType<TSchema>, TNamespace>;
