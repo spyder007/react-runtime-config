@@ -16,7 +16,7 @@
     "start": "jest --watch",
     "test": "jest",
     "build": "tsc -p tsconfig.package.json",
-    "ci": "yarn test --ci && yarn build",
+    "ci": "yarn test --ci --coverage && yarn build",
     "format": "eslint src/*.{ts,tsx} --fix && prettier src/*.{ts,tsx,json} --write"
   },
   "keywords": [
