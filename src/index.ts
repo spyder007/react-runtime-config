@@ -83,7 +83,7 @@ export function createConfig<TSchema extends Record<string, Config>, TNamespace 
     try {
       const rawValue = get(window, `${injected.namespace}.${String(path)}`, null);
       return rawValue === null ? null : parse(rawValue, options.schema[path]);
-    } catch (e : any) {
+    } catch (e: any) {
       throw new Error(`Config key "${String(path)}" not valid: ${e.message}`);
     }
   };
@@ -102,7 +102,9 @@ export function createConfig<TSchema extends Record<string, Config>, TNamespace 
     const windowValue = getWindowValue(path);
 
     if (defaultValue === undefined && windowValue === null) {
-      throw new Error(`Config key "${String(path)}" need to be defined in "window.${injected.namespace}.${String(path)}!`);
+      throw new Error(
+        `Config key "${String(path)}" need to be defined in "window.${injected.namespace}.${String(path)}!`,
+      );
     }
 
     return storageValue !== null ? storageValue : windowValue !== null ? windowValue : defaultValue;
