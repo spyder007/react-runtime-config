@@ -12,6 +12,8 @@ import { ConfigOptions } from "./types";
 // Localstorage mock
 let store = {};
 
+const backendUrl = "http://localhost";
+
 const storage = Mock.of<Storage>({
   getItem: (path: string) => get(store, path, null),
   setItem: (path: string, value: string) => {
@@ -102,7 +104,7 @@ describe("@spydersoft/react-runtime-config", () => {
   beforeEach(() => {
     set(window, namespace, {
       color: "blue",
-      backend: "http://localhost",
+      backend: backendUrl,
       monitoringLink: {
         url: "http://localhost:5000",
         displayName: "Monitoring",
@@ -243,7 +245,7 @@ describe("@spydersoft/react-runtime-config", () => {
 
     it("should set a value (string)", () => {
       const { getConfig, setConfig } = createConfigWithDefaults();
-      expect(getConfig("backend")).toBe("http://localhost");
+      expect(getConfig("backend")).toBe(backendUrl);
       setConfig("backend", "https://local");
       expect(getConfig("backend")).toBe("https://local");
     });
@@ -422,12 +424,13 @@ describe("@spydersoft/react-runtime-config", () => {
     });
 
     it("should be able to set some fields or reset everything", () => {
+      const url = "http://my-app.com";
       const { useAdminConfig } = createConfigWithDefaults();
       const { result } = renderHook(useAdminConfig);
       // Set some values
       result.current.fields.forEach(field => {
         if (field.key === "backend") {
-          act(() => field.set("http://my-app.com"));
+          act(() => field.set(url));
         }
         if (field.type === "number") {
           act(() => field.set(42));
@@ -437,9 +440,9 @@ describe("@spydersoft/react-runtime-config", () => {
       // Check the resulting state
       result.current.fields.forEach(field => {
         if (field.key === "backend") {
-          expect(field.windowValue).toBe("http://localhost");
-          expect(field.value).toBe("http://my-app.com");
-          expect(field.storageValue).toBe("http://my-app.com");
+          expect(field.windowValue).toBe(backendUrl);
+          expect(field.value).toBe(url);
+          expect(field.storageValue).toBe(url);
           expect(field.isFromStorage).toBe(true);
         } else if (field.type === "number") {
           expect(field.storageValue).toBe(42);

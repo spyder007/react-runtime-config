@@ -148,8 +148,7 @@ export function createConfig<TSchema extends Record<string, Config>, TNamespace 
         throw e;
       }
 
-      const error = getConfigError(config, path, value);
-      throw error;
+      throw getConfigError(config, path, value);
     }
 
     if (getWindowValue(path) === value || config.default === value) {
