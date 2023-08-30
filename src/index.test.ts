@@ -12,7 +12,8 @@ import { ConfigOptions } from "./types";
 // Localstorage mock
 let store = {};
 
-const backendUrl = "http://localhost";
+const backendUrl = "https://localhost";
+const backendWithPort = "https://localhost:5000"
 
 const storage = Mock.of<Storage>({
   getItem: (path: string) => get(store, path, null),
@@ -106,7 +107,7 @@ describe("@spydersoft/react-runtime-config", () => {
       color: "blue",
       backend: backendUrl,
       monitoringLink: {
-        url: "http://localhost:5000",
+        url: backendWithPort,
         displayName: "Monitoring",
       },
       isAwesome: true,
@@ -156,16 +157,17 @@ describe("@spydersoft/react-runtime-config", () => {
     it("should return a custom parsed value", () => {
       const { getConfig } = createConfigWithDefaults();
       const monitoringLink = getConfig("monitoringLink");
-      expect(monitoringLink.url).toBe("http://localhost:5000");
+      expect(monitoringLink.url).toBe(backendWithPort);
       expect(monitoringLink.displayName).toBe("Monitoring");
     });
 
     it("should return a custom parsed value from localStorage", () => {
+      const newBackend = "https://localhost:6000";
       const { getConfig, setConfig } = createConfigWithDefaults();
-      act(() => setConfig("monitoringLink", { url: "http://localhost:6000", displayName: "from local" }));
+      act(() => setConfig("monitoringLink", { url: newBackend, displayName: "from local" }));
 
       const monitoringLink = getConfig("monitoringLink");
-      expect(monitoringLink.url).toBe("http://localhost:6000");
+      expect(monitoringLink.url).toBe(newBackend);
       expect(monitoringLink.displayName).toBe("from local");
     });
 
@@ -221,13 +223,13 @@ describe("@spydersoft/react-runtime-config", () => {
 
       expect(getAllConfig()).toMatchInlineSnapshot(`
         {
-          "backend": "http://localhost",
+          "backend": "https://localhost",
           "color": "green",
           "isAwesome": true,
           "isLive": false,
           "monitoringLink": {
             "displayName": "Monitoring",
-            "url": "http://localhost:5000",
+            "url": "https://localhost:5000",
           },
           "port": 8000,
         }
@@ -352,13 +354,13 @@ describe("@spydersoft/react-runtime-config", () => {
       const all = result.current.getAllConfig();
       expect(all).toMatchInlineSnapshot(`
         {
-          "backend": "http://localhost",
+          "backend": "https://localhost",
           "color": "green",
           "isAwesome": true,
           "isLive": false,
           "monitoringLink": {
             "displayName": "Monitoring",
-            "url": "http://localhost:5000",
+            "url": "https://localhost:5000",
           },
           "port": 8000,
         }
@@ -424,7 +426,7 @@ describe("@spydersoft/react-runtime-config", () => {
     });
 
     it("should be able to set some fields or reset everything", () => {
-      const url = "http://my-app.com";
+      const url = "https://my-app.com";
       const { useAdminConfig } = createConfigWithDefaults();
       const { result } = renderHook(useAdminConfig);
       // Set some values
