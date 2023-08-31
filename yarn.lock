@@ -976,6 +976,7 @@ __metadata:
     eslint: ^8.48.0
     eslint-config-prettier: ^9.0.0
     eslint-plugin-prettier: ^5.0.0
+    eslint-plugin-sonarjs: ^0.21.0
     husky: ^8.0.3
     jest: ^29.6.4
     jest-environment-jsdom: ^29.6.4
@@ -2352,6 +2353,15 @@ __metadata:
     eslint-config-prettier:
       optional: true
   checksum: 84e88744b9050f2d5ef31b94e85294dda16f3a53c2449f9d33eac8ae6264889b459bf35a68e438fb6b329c2a1d6491aac4bfa00d86317e7009de3dad0311bec6
+  languageName: node
+  linkType: hard
+
+"eslint-plugin-sonarjs@npm:^0.21.0":
+  version: 0.21.0
+  resolution: "eslint-plugin-sonarjs@npm:0.21.0"
+  peerDependencies:
+    eslint: ^5.0.0 || ^6.0.0 || ^7.0.0 || ^8.0.0
+  checksum: c4d9de638a9ea6cc604355b02bc76819f811a3e20eb19bfc5741e3ad959721b573c9808b47e6aea4a6ce2d32101f42f2237f4d9c53230615c34afbf4ed6f69ea
   languageName: node
   linkType: hard
 

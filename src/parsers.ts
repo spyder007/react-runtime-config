@@ -42,7 +42,8 @@ export function parse<TConfig extends Config>(value: unknown, config: TConfig): 
   if (isStringEnumConfig(config)) {
     const parsedString = parseString(value) as ResolvedConfigValue<TConfig>;
     if (!config.enum.includes(parsedString as any)) {
-      throw new Error(`${parsedString} not part of [${config.enum.map(i => `"${i}"`).join(", ")}]`);
+      const errorValue = config.enum.map(i => `"${i}"`).join(", ");
+      throw new Error(`${parsedString} not part of [${errorValue}]`);
     }
     return parsedString;
   }

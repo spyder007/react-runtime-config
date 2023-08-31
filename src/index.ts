@@ -63,7 +63,7 @@ export function createConfig<TSchema extends Record<string, Config>, TNamespace 
       try {
         let rawValue = injected.storage.getItem(`${injected.namespace}.${String(path)}`);
         try {
-          rawValue = JSON.parse(rawValue || ""); // Handle objects stored as string
+          rawValue = JSON.parse(rawValue ?? ""); // Handle objects stored as string
         } catch {}
         return parse(rawValue, options.schema[path]);
       } catch {
@@ -107,7 +107,30 @@ export function createConfig<TSchema extends Record<string, Config>, TNamespace 
       );
     }
 
-    return storageValue !== null ? storageValue : windowValue !== null ? windowValue : defaultValue;
+    if (storageValue !== null) {
+      return storageValue;
+    }
+
+    return windowValue ?? defaultValue;
+  }
+
+  function getConfigError<K extends keyof ResolvedSchema<TSchema>>(
+    config: TSchema[K],
+    path: K,
+    value: ResolvedSchema<TSchema>[K],
+  ) {
+    if (isStringEnumConfig(config)) {
+      return new Error(`Expected "${String(path)}=${value}" to be one of: ${config.enum.join(", ")}`);
+    } else if (isNumberConfig(config) && Number.isFinite(value)) {
+      if (typeof config.min === "number" && Number(value) < config.min) {
+        return new Error(`Expected "${String(path)}=${value}" to be greater than ${config.min}`);
+      }
+      if (typeof config.max === "number" && Number(value) > config.max) {
+        return new Error(`Expected "${String(path)}=${value}" to be lower than ${config.max}`);
+      }
+    }
+
+    return new Error(`Expected "${String(path)}=${value}" to be a "${config.type}"`);
   }
 
   /**
@@ -124,19 +147,10 @@ export function createConfig<TSchema extends Record<string, Config>, TNamespace 
       if (isCustomConfig(config)) {
         throw e;
       }
-      if (isStringEnumConfig(config)) {
-        throw new Error(`Expected "${String(path)}=${value}" to be one of: ${config.enum.join(", ")}`);
-      } else if (isNumberConfig(config) && Number.isFinite(value)) {
-        if (typeof config.min === "number" && Number(value) < config.min) {
-          throw new Error(`Expected "${String(path)}=${value}" to be greater than ${config.min}`);
-        }
-        if (typeof config.max === "number" && Number(value) > config.max) {
-          throw new Error(`Expected "${String(path)}=${value}" to be lower than ${config.max}`);
-        }
-      }
 
-      throw new Error(`Expected "${String(path)}=${value}" to be a "${config.type}"`);
+      throw getConfigError(config, path, value);
     }
+
     if (getWindowValue(path) === value || config.default === value) {
       injected.storage.removeItem(`${injected.namespace}.${String(path)}`);
     } else {
