@@ -4,7 +4,7 @@
   "description": "Provide a typesafe runtime configuration inside a react app",
   "repository": {
     "type": "git",
-    "url": "git@github.com:spyder007/react-runtime-config.git"
+    "url": "git@github.com:spydersoft-consulting/react-runtime-config.git"
   },
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",

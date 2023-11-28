@@ -6,7 +6,7 @@
 A simple way to provide runtime configuration for your React application, with localStorage overrides and hot-reload support ⚡️!
 
 [![npm](https://img.shields.io/npm/dt/@spydersoft/react-runtime-config)](https://www.npmjs.com/package/@spydersoft/react-runtime-config)
-[![build](https://img.shields.io/github/actions/workflow/status/spyder007/react-runtime-config/build.yml)](https://www.npmjs.com/package/@spydersoft/react-runtime-config)
+[![build](https://img.shields.io/github/actions/workflow/status/spydersoft-consulting/react-runtime-config/build.yml)](https://www.npmjs.com/package/@spydersoft/react-runtime-config)
 ![mit](https://img.shields.io/github/license/mashape/apistatus.svg)
 
 ## Why
